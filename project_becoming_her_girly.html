@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Project: Becoming Her</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05102a;
+  --bg2:#0a1c3e;
+  --navy:#020918;
+  --blue:#1a5ce5;
+  --blue-soft:#2d74ff;
+  --blue-pale:rgba(45,116,255,0.14);
+  --blue-glow:rgba(45,116,255,0.28);
+  --pink:#ff7eb3;
+  --pink-pale:rgba(255,126,179,0.13);
+  --pink-glow:rgba(255,126,179,0.25);
+  --lavender:#c4b5fd;
+  --lav-pale:rgba(196,181,253,0.12);
+  --cream:#f5f0ff;
+  --text:#e8e2ff;
+  --muted:#8fa8d4;
+  --gold:#ffd6f0;
+  --card:rgba(255,255,255,0.04);
+  --card-hover:rgba(255,255,255,0.08);
+  --border:rgba(45,116,255,0.2);
+  --border-pink:rgba(255,126,179,0.2);
+  --shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(45,116,255,0.18) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 5%, rgba(255,126,179,0.14) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 80%, rgba(196,181,253,0.1) 0%, transparent 45%);
+  pointer-events:none;
+  z-index:0;
+}
+.cursor-glow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(45,116,255,0.08),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:0;transition:opacity .3s}
+header,main,footer{position:relative;z-index:1}
+
+/* NAV */
+.navbar{width:min(1160px,94%);margin:0 auto;padding:28px 0;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:-0.03em;color:var(--cream)}
+.brand-heart{font-size:1.3rem;filter:drop-shadow(0 0 8px var(--pink))}
+.nav-links{display:flex;gap:24px}
+.nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.9rem;transition:.25s;letter-spacing:.01em}
+.nav-links a:hover{color:var(--lavender)}
+
+/* HERO */
+.hero-content{width:min(1160px,94%);margin:40px auto 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--pink);margin-bottom:14px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.6rem);line-height:.96;letter-spacing:-.04em;color:var(--cream)}
+h1 em{color:var(--lavender);font-style:italic}
+.hero-sub{color:var(--muted);line-height:1.75;font-size:1.08rem;max-width:580px;margin:22px 0 28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn{border:0;cursor:pointer;padding:14px 24px;border-radius:999px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.25s;font-family:inherit;font-size:.95rem}
+.btn-primary{background:linear-gradient(135deg,#5b8fff,var(--blue));color:#fff;box-shadow:0 8px 28px rgba(45,116,255,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(45,116,255,.5)}
+.btn-secondary{background:var(--pink-pale);color:var(--pink);border:1px solid var(--border-pink)}
+.btn-secondary:hover{background:var(--pink-glow);transform:translateY(-2px)}
+
+/* HERO CARD */
+.hero-card{position:relative;padding:36px;border-radius:32px;background:var(--card);border:1px solid var(--border-pink);backdrop-filter:blur(20px);box-shadow:var(--shadow);overflow:hidden;animation:float 5s ease-in-out infinite}
+.hero-card::before{content:'';position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,126,179,.18);filter:blur(40px);right:-50px;top:-50px;pointer-events:none}
+.hero-card::after{content:'';position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(45,116,255,.2);filter:blur(35px);left:-40px;bottom:-40px;pointer-events:none}
+.card-eyebrow{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--pink);margin-bottom:14px}
+.daily-quest-title{font-family:'Playfair Display',serif;font-size:1.7rem;line-height:1.15;color:var(--cream);margin-bottom:10px;min-height:60px}
+.daily-quest-desc{color:var(--muted);font-size:.92rem;line-height:1.65;margin-bottom:20px}
+.shuffle-btn{background:var(--lav-pale);border:1px solid rgba(196,181,253,.25);color:var(--lavender);padding:10px 18px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.85rem;transition:.25s;display:inline-flex;align-items:center;gap:7px}
+.shuffle-btn:hover{background:rgba(196,181,253,.22);transform:scale(1.03)}
+.shuffle-btn:active{transform:scale(.97)}
+.xp-bar{height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin:18px 0 8px}
+.xp-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--lavender));transition:width 1s ease}
+.xp-label{font-size:.78rem;color:var(--muted);font-weight:600}
+
+/* STATS */
+.stats-section{width:min(1160px,94%);margin:0 auto 64px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat-card{padding:22px 20px;border-radius:22px;background:var(--card);border:1px solid var(--border);text-align:center;transition:.25s}
+.stat-card:hover{background:var(--card-hover)}
+.stat-num{font-size:2.2rem;font-weight:800;display:block;font-family:'Playfair Display',serif;color:var(--lavender);line-height:1}
+.stat-label{color:var(--muted);font-size:.85rem;font-weight:600;margin-top:8px}
+
+/* SECTION HEADER */
+.section-header{width:min(760px,94%);margin:0 auto 24px;text-align:center}
+.section-header h2{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,3rem);line-height:1.05;letter-spacing:-.03em;color:var(--cream);margin-bottom:12px}
+.section-header p{color:var(--muted);line-height:1.7}
+
+/* FILTERS */
+.filters{width:min(1160px,94%);margin:0 auto 24px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.filter-btn{padding:9px 16px;border-radius:999px;border:1px solid var(--border);background:var(--blue-pale);color:var(--muted);cursor:pointer;font-weight:700;font-family:inherit;font-size:.82rem;transition:.25s;white-space:nowrap}
+.filter-btn.active,.filter-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.filter-btn.active{box-shadow:0 4px 14px rgba(45,116,255,.35)}
+
+/* QUEST GRID */
+.quest-grid{width:min(1160px,94%);margin:0 auto 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.quest-card{padding:24px;border-radius:24px;background:var(--card);border:1px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;min-height:240px;transition:.3s;position:relative;overflow:hidden}
+.quest-card::before{content:'';position:absolute;width:90px;height:90px;border-radius:50%;right:-30px;top:-30px;background:var(--blue-glow);pointer-events:none}
+.quest-card:hover{background:var(--card-hover);border-color:rgba(45,116,255,.4);transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.quest-card.completed{opacity:.5}
+.quest-card.completed h3{text-decoration:line-through}
+.quest-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.badge{padding:5px 10px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.04em}
+.badge-cat{background:var(--blue-pale);color:#90b8ff}
+.badge-easy{background:rgba(134,239,172,.12);color:#86efac}
+.badge-medium{background:rgba(196,181,253,.12);color:var(--lavender)}
+.badge-legendary{background:rgba(255,126,179,.14);color:var(--pink);border:1px solid var(--border-pink)}
+.quest-card h3{font-size:1.1rem;font-weight:700;line-height:1.3;color:var(--cream);margin-bottom:8px;letter-spacing:-.02em}
+.quest-card p{color:var(--muted);font-size:.88rem;line-height:1.6;flex-grow:1}
+.quest-actions{display:flex;gap:8px;margin-top:18px}
+.small-btn{border:0;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.82rem;transition:.2s}
+.complete-btn{background:var(--blue);color:#fff}
+.complete-btn:hover{background:var(--blue-soft);box-shadow:0 4px 16px rgba(45,116,255,.4)}
+.delete-btn{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid rgba(255,255,255,.1)}
+.delete-btn:hover{background:rgba(255,80,100,.12);color:#ff9aaa}
+.empty-state{grid-column:1/-1;text-align:center;padding:40px;background:var(--card);border:1px solid var(--border);border-radius:24px;color:var(--muted)}
+
+/* ADD SECTION */
+.add-section{width:min(1160px,94%);margin:0 auto 80px;border-radius:32px;background:var(--card);border:1px solid var(--border-pink);padding:40px;display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start;box-shadow:var(--shadow)}
+.add-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--cream);line-height:1.1;margin-bottom:12px}
+.add-section p{color:var(--muted);line-height:1.7}
+.quest-form{display:grid;gap:10px}
+input,select,textarea{width:100%;padding:13px 16px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);font:inherit;outline:none;transition:.2s}
+input:focus,select:focus,textarea:focus{border-color:rgba(45,116,255,.5);background:rgba(255,255,255,.08)}
+select option{background:#0a1c3e;color:#e8e2ff}
+textarea{min-height:100px;resize:vertical}
+input::placeholder,textarea::placeholder{color:rgba(200,200,220,.35)}
+
+/* REFLECTIONS */
+.reflection-section{width:min(1160px,94%);margin:0 auto 70px;display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}
+.reflection-card{padding:30px;border-radius:28px;background:var(--card);border:1px solid var(--border-pink)}
+.reflection-card h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.5vw,2.2rem);color:var(--cream);line-height:1.1;margin-bottom:14px}
+.reflection-list{display:grid;gap:10px;align-content:start}
+.reflection-item{padding:18px 20px;border-radius:18px;background:var(--card);border:1px solid var(--border)}
+.reflection-item p{color:var(--muted);line-height:1.65;margin-top:5px;font-size:.9rem}
+.reflection-item small{color:var(--pink);font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+
+/* FOOTER */
+footer{text-align:center;padding:32px 20px 44px;border-top:1px solid rgba(45,116,255,.12)}
+footer p{color:var(--muted);font-size:.85rem}
+
+/* ANIMATIONS */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes reveal{to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinning{animation:spin .5s ease}
+
+.reveal{opacity:0;transform:translateY(20px);animation:reveal .8s ease forwards}
+.delay-1{animation-delay:.15s}
+.delay-2{animation-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-content,.add-section,.reflection-section{grid-template-columns:1fr}
+  .stats-section{grid-template-columns:repeat(2,1fr)}
+  .quest-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media(max-width:560px){
+  .quest-grid{grid-template-columns:1fr}
+  .filters{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}
+}
+
+/* FLOATING HEARTS BG */
+.hearts-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.heart-particle{position:absolute;opacity:0;font-size:12px;animation:drift linear infinite}
+@keyframes drift{0%{opacity:0;transform:translateY(0) rotate(0deg)}15%{opacity:.35}85%{opacity:.2}100%{opacity:0;transform:translateY(-100vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="hearts-bg" id="heartsBg"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<header id="home">
+  <nav class="navbar">
+    <div class="brand">
+      <span class="brand-heart">🩵</span>
+      <span>Project: Becoming Her</span>
+    </div>
+    <div class="nav-links">
+      <a href="#progress">Progress</a>
+      <a href="#quests">Quests</a>
+      <a href="#add">Add Quest</a>
+      <a href="#reflections">Reflections</a>
+    </div>
+  </nav>
+
+  <section class="hero-content">
+    <div class="hero-text reveal">
+      <p class="eyebrow">✦ Mharvee's life upgrade ✦</p>
+      <h1>Collect stories.<br><em>Build courage.</em><br>Become her.</h1>
+      <p class="hero-sub">A blue and lovey-dovey side quest tracker for reading, faith, skills, games, random curiosity, courage, life admin, and adventures.</p>
+      <div class="hero-actions">
+        <a href="#quests" class="btn btn-primary">✨ Explore Quests</a>
+        <a href="#add" class="btn btn-secondary">🩷 Add New Quest</a>
+      </div>
+    </div>
+
+    <div class="hero-card reveal delay-1">
+      <div class="card-eyebrow">🌙 Quest of the day</div>
+      <div class="daily-quest-title" id="dailyQuestTitle">Loading your quest...</div>
+      <div class="daily-quest-desc" id="dailyQuestDesc">Your next adventure is loading, bestie.</div>
+      <button class="shuffle-btn" id="shuffleBtn" onclick="shuffleQuest()">
+        <span id="shuffleIcon">✦</span> Shuffle quest
+      </button>
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:8%"></div></div>
+      <div class="xp-label" id="xpLabel">+25 XP for showing up today ✨</div>
+    </div>
+  </section>
+</header>
+
+<main>
+  <section class="stats-section reveal" id="progress">
+    <div class="stat-card"><span class="stat-num" id="totalQuests">0</span><div class="stat-label">Total quests</div></div>
+    <div class="stat-card"><span class="stat-num" id="completedQuests">0</span><div class="stat-label">Completed</div></div>
+    <div class="stat-card"><span class="stat-num" id="progressPercent">0%</span><div class="stat-label">Progress</div></div>
+    <div class="stat-card"><span class="stat-num" id="legendaryQuests">0</span><div class="stat-label">Legendary</div></div>
+  </section>
+
+  <section class="section-header reveal" id="quests">
+    <p class="eyebrow">🗺 Quest board</p>
+    <h2>Pick a category and start the adventure.</h2>
+    <p>170 quests for making life feel less repetitive and more like character development.</p>
+  </section>
+
+  <section class="filters reveal">
+    <button class="filter-btn active" data-filter="All">All</button>
+    <button class="filter-btn" data-filter="Reading">📚 Reading</button>
+    <button class="filter-btn" data-filter="Spiritual">🕊 Spiritual</button>
+    <button class="filter-btn" data-filter="Skills">⚡ Skills</button>
+    <button class="filter-btn" data-filter="Games">🎮 Games</button>
+    <button class="filter-btn" data-filter="Random Knowledge">🧠 Random Knowledge</button>
+    <button class="filter-btn" data-filter="Outside">🌿 Outside</button>
+    <button class="filter-btn" data-filter="Courage">🦋 Courage</button>
+    <button class="filter-btn" data-filter="Life Admin">🗂 Life Admin</button>
+    <button class="filter-btn" data-filter="Becoming Her">🩷 Becoming Her</button>
+  </section>
+
+  <section class="quest-grid" id="questGrid"></section>
+
+  <section class="add-section reveal" id="add">
+    <div>
+      <p class="eyebrow">✍️ Create your own</p>
+      <h2>Add a fresh side quest.</h2>
+      <p style="margin-top:10px">Make it small enough to start, interesting enough to finish, and dramatic enough to feel like character development.</p>
+    </div>
+    <form id="questForm" class="quest-form">
+      <input type="text" id="questTitle" placeholder="Quest title e.g. Walk without headphones" required>
+      <select id="questCategory" required>
+        <option value="Reading">Reading</option>
+        <option value="Spiritual">Spiritual</option>
+        <option value="Skills">Skills</option>
+        <option value="Games">Games</option>
+        <option value="Random Knowledge">Random Knowledge</option>
+        <option value="Outside">Outside</option>
+        <option value="Courage">Courage</option>
+        <option value="Life Admin">Life Admin</option>
+        <option value="Becoming Her">Becoming Her</option>
+      </select>
+      <select id="questDifficulty" required>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Legendary">Legendary</option>
+      </select>
+      <textarea id="questDescription" placeholder="What will you do?" required></textarea>
+      <button class="btn btn-primary" type="submit">Add quest ✨</button>
+    </form>
+  </section>
+
+  <section class="reflection-section reveal" id="reflections">
+    <div class="reflection-card">
+      <p class="eyebrow">📖 Reflection log</p>
+      <h2>What did today teach you?</h2>
+      <textarea id="reflectionInput" placeholder="Write a short reflection, love..." style="margin:14px 0 10px"></textarea>
+      <button class="btn btn-secondary" id="saveReflectionBtn">Save reflection 🌙</button>
+    </div>
+    <div class="reflection-list" id="reflectionList"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Built by Mharvee · A one-month life upgrade project 🩵</p>
+</footer>
+
+<script>
+const starterQuests=[{title:"Read 20 pages before opening Instagram",category:"Reading",difficulty:"Easy",description:"Let the book get the first attention of the day. No scrolling until the pages are done.",completed:false},{title:"Read one chapter and give it a dramatic title",category:"Reading",difficulty:"Easy",description:"Rename the chapter like it is an episode in your life. Tiny fun, big retention.",completed:false},{title:"Finish a book you abandoned",category:"Reading",difficulty:"Medium",description:"Pick one book that has been judging you from a corner and finally close that chapter.",completed:false},{title:"Read a genre you normally avoid",category:"Reading",difficulty:"Easy",description:"Romance, memoir, sci-fi, theology, history — anything outside your normal shelf.",completed:false},{title:"Visit a bookstore and leave without buying anything",category:"Reading",difficulty:"Medium",description:"Browse slowly, write down three books you want, and practice self-control.",completed:false},{title:"Visit a bookstore and buy one random book",category:"Reading",difficulty:"Medium",description:"Choose based on curiosity, not aesthetics. Let chance pick the next rabbit hole.",completed:false},{title:"Read a biography of someone you admire",category:"Reading",difficulty:"Medium",description:"Study how a real person became excellent, messy parts included.",completed:false},{title:"Read one essay and write a response",category:"Reading",difficulty:"Medium",description:"Read an essay online, then write what you agree with, disagree with, and want to remember.",completed:false},{title:"Read one short story in one sitting",category:"Reading",difficulty:"Easy",description:"No pause, no multitasking. Enter another world and come back with one sentence about it.",completed:false},{title:"Read for one hour with your phone in another room",category:"Reading",difficulty:"Medium",description:"Prove to your brain that focus is still available.",completed:false},{title:"Read one Psalm out loud",category:"Reading",difficulty:"Easy",description:"Read slowly like you mean it. Notice which line stays with you.",completed:false},{title:"Create a mini reading tracker",category:"Reading",difficulty:"Medium",description:"Track title, pages, favorite quote, and one lesson. Make it pretty if you want.",completed:false},{title:"Read a book review before choosing your next book",category:"Reading",difficulty:"Easy",description:"Compare three reviews and decide whether the book deserves your time.",completed:false},{title:"Read a book in 48 hours",category:"Reading",difficulty:"Legendary",description:"Pick a short or medium book and commit like it is a weekend mission.",completed:false},{title:"Complete a 30-day reading streak",category:"Reading",difficulty:"Legendary",description:"Even if it is only 5 pages daily, do not break the chain.",completed:false},{title:"Study one Bible chapter deeply",category:"Spiritual",difficulty:"Medium",description:"Read, highlight, write one lesson, and turn it into a short prayer.",completed:false},{title:"Pray without asking God for anything",category:"Spiritual",difficulty:"Easy",description:"Spend the time thanking, worshipping, and listening instead of requesting.",completed:false},{title:"Write a letter to God",category:"Spiritual",difficulty:"Easy",description:"Be honest about what you are grateful for, confused about, scared of, and hoping for.",completed:false},{title:"Spend 30 minutes in silence",category:"Spiritual",difficulty:"Medium",description:"No music, no phone, no performance. Just sit, breathe, pray, and think.",completed:false},{title:"Fast from social media for a day",category:"Spiritual",difficulty:"Medium",description:"Replace the scroll with prayer, journaling, Bible study, or quiet.",completed:false},{title:"Memorize one Bible verse",category:"Spiritual",difficulty:"Medium",description:"Repeat it until you can say it without looking. Then use it in prayer.",completed:false},{title:"Listen to worship music without doing anything else",category:"Spiritual",difficulty:"Easy",description:"No chores, no chatting, no scrolling. Just worship.",completed:false},{title:"Journal what God may be teaching you right now",category:"Spiritual",difficulty:"Medium",description:"Write the patterns, the lessons, the corrections, and the encouragement.",completed:false},{title:"Have a spiritual conversation with someone",category:"Spiritual",difficulty:"Medium",description:"Ask what God has been teaching them and actually listen.",completed:false},{title:"Pray for a stranger",category:"Spiritual",difficulty:"Medium",description:"Quietly pray for someone you notice during the day.",completed:false},{title:"Invite someone to church",category:"Spiritual",difficulty:"Legendary",description:"Send the message, make the invitation warm, and do not overthink it.",completed:false},{title:"Go evangelizing",category:"Spiritual",difficulty:"Legendary",description:"Go with wisdom and safety. Share your faith with gentleness and courage.",completed:false},{title:"Create a Sunday reset ritual",category:"Spiritual",difficulty:"Easy",description:"Prayer, room reset, worship playlist, weekly plan, and one intention.",completed:false},{title:"Read one Christian article or sermon note",category:"Spiritual",difficulty:"Medium",description:"Choose a topic you have been thinking about and take three notes.",completed:false},{title:"Wake up before sunrise to pray",category:"Spiritual",difficulty:"Legendary",description:"Start the day before noise enters it. Let the morning feel sacred.",completed:false},{title:"Write down 50 things you are grateful for",category:"Spiritual",difficulty:"Easy",description:"Keep going after the obvious ones. That is where the real gratitude starts.",completed:false},{title:"Study one Bible character",category:"Spiritual",difficulty:"Medium",description:"What did they desire, fear, obey, avoid, and become?",completed:false},{title:"Pray for your future family",category:"Spiritual",difficulty:"Easy",description:"Pray for wisdom, patience, love, and the kind of home you want to build.",completed:false},{title:"Share your testimony with one person",category:"Spiritual",difficulty:"Medium",description:"Keep it real. What did God do, and what changed in you?",completed:false},{title:"Make a worship playlist for your current season",category:"Spiritual",difficulty:"Easy",description:"Choose songs that match where your heart is and where it is going.",completed:false},{title:"Build a tiny AI feature in 60 minutes",category:"Skills",difficulty:"Legendary",description:"Create a small generator, tracker, prompt tool, or helper with an AI API or no-code tool.",completed:false},{title:"Write a Substack note from one question",category:"Skills",difficulty:"Medium",description:"Pick a question that has been disturbing your mind and write 300 honest words.",completed:false},{title:"Redesign one screen of an app you use daily",category:"Skills",difficulty:"Medium",description:"Sketch what you would improve and explain your design choices.",completed:false},{title:"Learn 10 keyboard shortcuts",category:"Skills",difficulty:"Easy",description:"Choose VS Code, Chrome, Canva, Figma, or your laptop and memorize shortcuts you will actually use.",completed:false},{title:"Watch one tutorial and actually do the thing",category:"Skills",difficulty:"Medium",description:"No passive watching. Pause, copy, test, and finish the mini result.",completed:false},{title:"Build a basic landing page from scratch",category:"Skills",difficulty:"Legendary",description:"HTML, CSS, one clear idea, and no template. Deploy it free if possible.",completed:false},{title:"Make a portfolio case study from one project",category:"Skills",difficulty:"Medium",description:"Write the problem, your process, tools used, challenges, and final result.",completed:false},{title:"Clean your GitHub profile",category:"Skills",difficulty:"Easy",description:"Pin your best repos, update your bio, and remove anything that looks abandoned.",completed:false},{title:"Learn one new JavaScript concept",category:"Skills",difficulty:"Medium",description:"Pick arrays, DOM, localStorage, fetch, or functions and build a tiny example.",completed:false},{title:"Build and deploy a project in one day",category:"Skills",difficulty:"Legendary",description:"Small scope only. The win is shipping, not perfection.",completed:false},{title:"Teach someone one tech concept",category:"Skills",difficulty:"Medium",description:"Explain it like they are smart but new. Teaching exposes what you actually know.",completed:false},{title:"Improve one old design",category:"Skills",difficulty:"Easy",description:"Take one previous flyer/banner/site section and make it cleaner.",completed:false},{title:"Create a reusable Canva template",category:"Skills",difficulty:"Medium",description:"Make something you can use for future church, internship, or client work.",completed:false},{title:"Submit a project to your supervisor or mentor",category:"Skills",difficulty:"Legendary",description:"Package it well enough that someone else can understand the value.",completed:false},{title:"Build a tool for church",category:"Skills",difficulty:"Medium",description:"A form, tracker, flyer system, volunteer sheet, or anything that solves a real small problem.",completed:false},{title:"Build a tool for students",category:"Skills",difficulty:"Medium",description:"Think timetable, assignment tracker, study buddy, or CGPA helper.",completed:false},{title:"Write a README that does not embarrass you",category:"Skills",difficulty:"Easy",description:"Add purpose, features, screenshots, setup steps, and what you learned.",completed:false},{title:"Record a 2-minute demo of a project",category:"Skills",difficulty:"Medium",description:"Talk through what it does like you are presenting to Mr Kalu.",completed:false},{title:"Learn one design principle and apply it",category:"Skills",difficulty:"Easy",description:"Hierarchy, contrast, spacing, alignment, or typography. Pick one and use it immediately.",completed:false},{title:"Create a mini AI-security project idea board",category:"Skills",difficulty:"Legendary",description:"List 10 projects combining AI, security, computer vision, or automation.",completed:false},{title:"Challenge someone to chess",category:"Games",difficulty:"Medium",description:"Send the message or ask in person. Win or lose, collect the story.",completed:false},{title:"Learn one chess opening",category:"Games",difficulty:"Medium",description:"Learn the first five moves, the idea behind them, and play three practice games.",completed:false},{title:"Beat someone higher rated than you",category:"Games",difficulty:"Legendary",description:"Focus properly. No panic moves. Let the underdog plot begin.",completed:false},{title:"Play one slow chess game",category:"Games",difficulty:"Easy",description:"No rushing. Think through your moves and write down one mistake after.",completed:false},{title:"Analyze one lost chess game",category:"Games",difficulty:"Medium",description:"Do not just suffer and move on. Find where the game changed.",completed:false},{title:"Play Wordle or 2048 until you beat your old score",category:"Games",difficulty:"Easy",description:"Simple brain workout. Track the score.",completed:false},{title:"Learn a card game",category:"Games",difficulty:"Easy",description:"Solitaire, Spades, Whot, or anything new. Learn the rules properly.",completed:false},{title:"Complete a digital jigsaw puzzle",category:"Games",difficulty:"Medium",description:"Choose 100 pieces or more. Time yourself.",completed:false},{title:"Host a mini game night",category:"Games",difficulty:"Medium",description:"Family, friends, or online. Make the house feel alive.",completed:false},{title:"Create your own game rules",category:"Games",difficulty:"Legendary",description:"Invent a simple card, word, or challenge game and test it with someone.",completed:false},{title:"Play GeoGuessr or a map guessing game",category:"Games",difficulty:"Easy",description:"Learn places while pretending you are a detective.",completed:false},{title:"Play chess without resigning early",category:"Games",difficulty:"Medium",description:"Even when it looks bad, practice fighting back.",completed:false},{title:"Try a game you used to love as a child",category:"Games",difficulty:"Easy",description:"Let nostalgia do something useful for your mood.",completed:false},{title:"Teach someone chess basics",category:"Games",difficulty:"Medium",description:"Pawns, pieces, checkmate, one opening. Make it fun, not intimidating.",completed:false},{title:"Run a mini chess tournament at home",category:"Games",difficulty:"Legendary",description:"At least three people or three rounds. Crown a dramatic winner.",completed:false},{title:"Learn how WiFi actually works",category:"Random Knowledge",difficulty:"Easy",description:"Spend 30 minutes understanding the invisible thing carrying your whole internet life.",completed:false},{title:"Learn how phone cameras work",category:"Random Knowledge",difficulty:"Easy",description:"Find out how light becomes the picture in your gallery.",completed:false},{title:"Research one random country",category:"Random Knowledge",difficulty:"Easy",description:"Capital, food, flag, culture, one surprising fact, and one place you would visit.",completed:false},{title:"Learn one thing about every African region",category:"Random Knowledge",difficulty:"Medium",description:"North, South, East, West, and Central Africa. One fact each.",completed:false},{title:"Watch a documentary outside tech",category:"Random Knowledge",difficulty:"Easy",description:"Choose history, animals, architecture, food, psychology, or crime.",completed:false},{title:"Follow a Wikipedia rabbit hole for one hour",category:"Random Knowledge",difficulty:"Medium",description:"Start with one topic and click links until you end somewhere unexpected.",completed:false},{title:"Learn one Nigerian historical event",category:"Random Knowledge",difficulty:"Easy",description:"Pick something beyond what school repeated. Write five facts.",completed:false},{title:"Read about one African empire",category:"Random Knowledge",difficulty:"Medium",description:"Mali, Benin, Oyo, Songhai, Kush, Aksum — pick one and go deep.",completed:false},{title:"Learn the story behind a famous invention",category:"Random Knowledge",difficulty:"Easy",description:"Who made it, why, and what problem it solved.",completed:false},{title:"Read about one unsolved mystery in science",category:"Random Knowledge",difficulty:"Medium",description:"Dark matter, consciousness, deep sea life, or prime numbers.",completed:false},{title:"Learn a random word and use it three times",category:"Random Knowledge",difficulty:"Easy",description:"Make it part of your vocabulary for the day.",completed:false},{title:"Watch a TED Talk outside your field",category:"Random Knowledge",difficulty:"Medium",description:"Take five notes and one opinion. Do not just consume.",completed:false},{title:"Learn how electricity reaches your house",category:"Random Knowledge",difficulty:"Easy",description:"From generation to socket. Make it make sense.",completed:false},{title:"Research one woman in tech",category:"Random Knowledge",difficulty:"Medium",description:"Learn her work, her field, and what made her excellent.",completed:false},{title:"Learn about one strange animal",category:"Random Knowledge",difficulty:"Easy",description:"The weirder, the better. Nature is unserious sometimes.",completed:false},{title:"Study one Bible archaeology topic",category:"Random Knowledge",difficulty:"Medium",description:"Look into places, artifacts, or historical context connected to scripture.",completed:false},{title:"Learn one new thing about Lagos",category:"Random Knowledge",difficulty:"Easy",description:"History, architecture, food, traffic systems, culture, or old photographs.",completed:false},{title:"Explain a complex topic in simple English",category:"Random Knowledge",difficulty:"Medium",description:"Pick any topic and write a version a 12-year-old could understand.",completed:false},{title:"Make a random knowledge presentation",category:"Random Knowledge",difficulty:"Legendary",description:"Create 5 slides on something odd and present it to one person.",completed:false},{title:"Ask someone older about how life used to be",category:"Random Knowledge",difficulty:"Easy",description:"Collect a real-life history lesson, not internet history.",completed:false},{title:"Take a walk without headphones",category:"Outside",difficulty:"Easy",description:"Let yourself think. No music, no podcast, no escape.",completed:false},{title:"Take a walk without touching your phone",category:"Outside",difficulty:"Easy",description:"Notice five things you usually ignore.",completed:false},{title:"Go on a solo date for at least one hour",category:"Outside",difficulty:"Medium",description:"No unnecessary scrolling. Eat, read, journal, or people-watch.",completed:false},{title:"Watch a sunset",category:"Outside",difficulty:"Easy",description:"Stand still long enough to remember the world is beautiful.",completed:false},{title:"Wake up early and watch the sunrise somewhere safe",category:"Outside",difficulty:"Legendary",description:"A rooftop, compound, quiet street, or beach with company if needed.",completed:false},{title:"Sit in a café alone",category:"Outside",difficulty:"Medium",description:"Order something small, stay for one hour, and be comfortable with your own company.",completed:false},{title:"Spend one hour outside doing nothing productive",category:"Outside",difficulty:"Easy",description:"No performance. Just exist outside your room.",completed:false},{title:"Visit a museum, gallery, or cultural space",category:"Outside",difficulty:"Medium",description:"Go learn something with your whole body, not just your screen.",completed:false},{title:"Explore a street or area you have never visited",category:"Outside",difficulty:"Medium",description:"Stay safe, go in daylight, and collect five observations.",completed:false},{title:"Take photos of interesting ordinary things",category:"Outside",difficulty:"Easy",description:"Doors, signs, shadows, skies, colors. Train your eye.",completed:false},{title:"Visit a beach or waterside area",category:"Outside",difficulty:"Medium",description:"Let water reset your brain. Go safely and preferably not too late.",completed:false},{title:"Take a bus somewhere unfamiliar",category:"Outside",difficulty:"Medium",description:"Choose a safe route and observe the city like a documentary.",completed:false},{title:"Eat somewhere you have never eaten before",category:"Outside",difficulty:"Easy",description:"Try a small, affordable meal and rate the experience.",completed:false},{title:"Attend a free event",category:"Outside",difficulty:"Medium",description:"Church event, tech meetup, book event, gallery opening, or community program.",completed:false},{title:"Buy fruit from a roadside seller and ask how their day is going",category:"Outside",difficulty:"Easy",description:"Tiny human interaction. Do not make it weird.",completed:false},{title:"Go to a library or quiet public study space",category:"Outside",difficulty:"Medium",description:"Work for one focused hour outside your normal environment.",completed:false},{title:"Walk to buy something instead of ordering it",category:"Outside",difficulty:"Easy",description:"Make the errand a mini adventure.",completed:false},{title:"Go out wearing an outfit that makes you feel confident",category:"Outside",difficulty:"Medium",description:"Not overdressed, just intentional. Let outside see effort.",completed:false},{title:"Take a solo adventure somewhere new",category:"Outside",difficulty:"Legendary",description:"Plan it, budget it, go safely, and document what you learned.",completed:false},{title:"Sit outside and journal for 20 minutes",category:"Outside",difficulty:"Easy",description:"Let the environment change the thoughts.",completed:false},{title:"Start a conversation with a stranger",category:"Courage",difficulty:"Medium",description:"Ask a simple, respectful question and actually listen to the answer.",completed:false},{title:"Compliment a stranger",category:"Courage",difficulty:"Easy",description:"Make it specific and kind. Then move on like a normal person.",completed:false},{title:"Ask someone about their life story",category:"Courage",difficulty:"Medium",description:"Give them room to talk. People are carrying novels.",completed:false},{title:"Call a friend instead of texting",category:"Courage",difficulty:"Easy",description:"Voice adds warmth. Do not hide behind typing every time.",completed:false},{title:"Reply to every unread message",category:"Courage",difficulty:"Medium",description:"Clear the guilt pile. Even short replies count.",completed:false},{title:"Reach out to someone you lost touch with",category:"Courage",difficulty:"Medium",description:"Send a simple message. No dramatic essay needed.",completed:false},{title:"Ask a question in public",category:"Courage",difficulty:"Medium",description:"Class, church, event, meeting — let your voice exist.",completed:false},{title:"Introduce yourself to someone new",category:"Courage",difficulty:"Easy",description:"Name, what you do, one genuine question. That is enough.",completed:false},{title:"Attend an event alone",category:"Courage",difficulty:"Legendary",description:"Do not wait for a group before you experience your life.",completed:false},{title:"Share an opinion you normally keep to yourself",category:"Courage",difficulty:"Medium",description:"Be honest without being rude. Practice having a voice.",completed:false},{title:"Post something meaningful online",category:"Courage",difficulty:"Medium",description:"Not perfect. Just real enough to count.",completed:false},{title:"Ask for help when you need it",category:"Courage",difficulty:"Medium",description:"No unnecessary suffering for aesthetics.",completed:false},{title:"Ask someone you admire for advice",category:"Courage",difficulty:"Legendary",description:"Send a respectful message with one clear question.",completed:false},{title:"Record yourself talking for 5 minutes",category:"Courage",difficulty:"Easy",description:"Build comfort with your own voice and presence.",completed:false},{title:"Start a conversation in a queue",category:"Courage",difficulty:"Medium",description:"Short, polite, human. Lagos has enough material.",completed:false},{title:"Do one thing that scares you a little",category:"Courage",difficulty:"Legendary",description:"Not reckless. Just brave enough to stretch you.",completed:false},{title:"Say yes to a reasonable opportunity",category:"Courage",difficulty:"Medium",description:"Especially the one you would usually dodge because of shyness.",completed:false},{title:"Make eye contact and greet people properly for a day",category:"Courage",difficulty:"Easy",description:"Small confidence reps. They count.",completed:false},{title:"Ask someone to teach you something",category:"Courage",difficulty:"Medium",description:"Let someone else be good at something in front of you.",completed:false},{title:"Have a one-hour conversation with someone from a different background",category:"Courage",difficulty:"Legendary",description:"Ask, listen, learn, and leave with a wider world.",completed:false},{title:"Go off all socials for a full day",category:"Life Admin",difficulty:"Medium",description:"No Instagram, TikTok, X, Snapchat. Let your brain breathe.",completed:false},{title:"Reply to all unread messages",category:"Life Admin",difficulty:"Easy",description:"Clear WhatsApp, SMS, email, and DMs. No more digital dust.",completed:false},{title:"Clean your room like your future self is visiting",category:"Life Admin",difficulty:"Easy",description:"Reset the space so your mind has somewhere calm to land.",completed:false},{title:"Reorganize your wardrobe",category:"Life Admin",difficulty:"Medium",description:"Remove what you do not wear and create outfits you actually like.",completed:false},{title:"Clear your phone gallery",category:"Life Admin",difficulty:"Easy",description:"Delete duplicates, blurry photos, screenshots, and nonsense.",completed:false},{title:"Clean your laptop desktop and downloads",category:"Life Admin",difficulty:"Medium",description:"Folders, names, order. Stop letting files live like refugees.",completed:false},{title:"Create a weekly budget note",category:"Life Admin",difficulty:"Easy",description:"Write income, spending, savings, and one financial boundary.",completed:false},{title:"Plan your next seven days",category:"Life Admin",difficulty:"Medium",description:"School, work, prayer, rest, projects, and one fun thing.",completed:false},{title:"Update your to-do list and delete fake tasks",category:"Life Admin",difficulty:"Easy",description:"If you are never doing it, release yourself.",completed:false},{title:"Do laundry before it becomes a mountain",category:"Life Admin",difficulty:"Medium",description:"Character development sometimes smells like detergent.",completed:false},{title:"Create a sleep reset night",category:"Life Admin",difficulty:"Easy",description:"Bath, clean bed, no phone in bed, sleep earlier.",completed:false},{title:"Cook one proper meal from scratch",category:"Life Admin",difficulty:"Medium",description:"Not noodles pretending to be cuisine. A real meal.",completed:false},{title:"Drink enough water for one day",category:"Life Admin",difficulty:"Easy",description:"Track it. Your body should not have to beg.",completed:false},{title:"Plan three outfits for the week",category:"Life Admin",difficulty:"Medium",description:"Reduce morning confusion and look like you meant it.",completed:false},{title:"Go a full weekend without social media",category:"Life Admin",difficulty:"Legendary",description:"Use the time for books, prayer, walks, people, and sleep.",completed:false},{title:"Unsubscribe from useless emails",category:"Life Admin",difficulty:"Easy",description:"Stop letting strangers shout in your inbox.",completed:false},{title:"Create a personal emergency folder",category:"Life Admin",difficulty:"Medium",description:"Important docs, passwords plan, school/work info, and backups.",completed:false},{title:"Wash your makeup brushes or beauty tools",category:"Life Admin",difficulty:"Easy",description:"Small hygiene quest. Big adulting energy.",completed:false},{title:"Create a morning routine you can actually keep",category:"Life Admin",difficulty:"Medium",description:"Simple: wake, pray, water, plan, one useful action.",completed:false},{title:"End the day by writing what made it memorable",category:"Life Admin",difficulty:"Easy",description:"Train your life to become something you notice.",completed:false},{title:"Take a driving lesson with your dad",category:"Becoming Her",difficulty:"Legendary",description:"Let it be bonding, learning, and comedy. Try not to argue too much.",completed:false},{title:"Create a vision board",category:"Becoming Her",difficulty:"Medium",description:"Not just pretty pictures. Add habits, skills, places, and the woman you are becoming.",completed:false},{title:"Write a letter to 30-year-old Marvellous",category:"Becoming Her",difficulty:"Easy",description:"Tell her what you hope she remembers about this season.",completed:false},{title:"Write a letter to your future husband",category:"Becoming Her",difficulty:"Easy",description:"Soft, honest, funny, and private. No pressure, just heart.",completed:false},{title:"Create a Things I Want To Experience list",category:"Becoming Her",difficulty:"Medium",description:"Not achievements only. Experiences, places, feelings, friendships, adventures.",completed:false},{title:"Wear an outfit that makes you feel powerful",category:"Becoming Her",difficulty:"Medium",description:"Take pictures if you want. The point is to feel intentional.",completed:false},{title:"Make a Becoming Her playlist",category:"Becoming Her",difficulty:"Easy",description:"Songs for courage, prayer, softness, focus, and main-character walks.",completed:false},{title:"Spend a day living like your ideal future self",category:"Becoming Her",difficulty:"Medium",description:"How would she wake up, speak, work, rest, and choose? Do that.",completed:false},{title:"Take yourself seriously for one full day",category:"Becoming Her",difficulty:"Medium",description:"No self-insults. No shrinking. Act like your dreams are valid.",completed:false},{title:"Write 10 things you like about yourself",category:"Becoming Her",difficulty:"Easy",description:"Not achievements. You. Your mind, humor, softness, grit, voice.",completed:false},{title:"Create a personal style moodboard",category:"Becoming Her",difficulty:"Medium",description:"Colors, outfits, hairstyles, accessories, and the energy you want to give.",completed:false},{title:"Publish 10 Substack notes",category:"Becoming Her",difficulty:"Legendary",description:"Questions, observations, faith, humor, becoming, life. Build the writing muscle.",completed:false},{title:"Ask your parents one meaningful question",category:"Becoming Her",difficulty:"Medium",description:"Collect wisdom while you still have close access to it.",completed:false},{title:"Make a list of people who make you feel more alive",category:"Becoming Her",difficulty:"Easy",description:"Then plan to spend more time around that kind of energy.",completed:false},{title:"Plan a low-cost self-care day",category:"Becoming Her",difficulty:"Medium",description:"Bath, hair, nails, journaling, sleep, movie, book, prayer. Soft life within budget.",completed:false},{title:"Do a 7-day 5am challenge",category:"Becoming Her",difficulty:"Legendary",description:"Wake early, pray, read, plan, and move. Do not make it aesthetic; make it real.",completed:false},{title:"Create a confidence jar",category:"Becoming Her",difficulty:"Easy",description:"Write tiny wins on paper and keep adding them.",completed:false},{title:"Record a video to future you",category:"Becoming Her",difficulty:"Medium",description:"Talk about what life feels like right now and what you are hoping for.",completed:false},{title:"Spend a day collecting stories instead of consuming content",category:"Becoming Her",difficulty:"Legendary",description:"Talk to people, observe places, write notes. No endless scrolling.",completed:false},{title:"Make peace with one unfinished version of yourself",category:"Becoming Her",difficulty:"Medium",description:"Write what you forgive yourself for, then choose the next right step.",completed:false}];
+
+const QUEST_VERSION="mharvee-quests-v3-girly";
+const savedVersion=localStorage.getItem("mharveeQuestVersion");
+const savedQuests=JSON.parse(localStorage.getItem("mharveeQuests"));
+let quests=savedVersion===QUEST_VERSION&&savedQuests?savedQuests:starterQuests;
+let reflections=JSON.parse(localStorage.getItem("mharveeReflections"))||[];
+let currentFilter="All";
+let currentDailyIndex=-1;
+
+if(savedVersion!==QUEST_VERSION){
+  localStorage.setItem("mharveeQuestVersion",QUEST_VERSION);
+  localStorage.setItem("mharveeQuests",JSON.stringify(starterQuests));
+}
+
+function saveQuests(){localStorage.setItem("mharveeQuests",JSON.stringify(quests))}
+function saveReflections(){localStorage.setItem("mharveeReflections",JSON.stringify(reflections))}
+
+function getDailyIndexForToday(pool){
+  const today=new Date();
+  const seed=today.getDate()*31+today.getMonth()*12+today.getFullYear();
+  return seed%pool.length;
+}
+
+function setDailyQuest(){
+  const open=quests.filter(q=>!q.completed);
+  if(!open.length){
+    document.getElementById("dailyQuestTitle").textContent="You completed everything! Add a new quest ✨";
+    document.getElementById("dailyQuestDesc").textContent="You absolute legend.";
+    return;
+  }
+  const idx=currentDailyIndex<0?getDailyIndexForToday(open):currentDailyIndex%open.length;
+  currentDailyIndex=idx;
+  const quest=open[idx];
+  document.getElementById("dailyQuestTitle").textContent=quest.title;
+  document.getElementById("dailyQuestDesc").textContent=quest.description;
+}
+
+window.shuffleQuest=function(){
+  const btn=document.getElementById("shuffleBtn");
+  const icon=document.getElementById("shuffleIcon");
+  icon.style.display="inline-block";
+  icon.style.animation="spin .5s ease";
+  setTimeout(()=>{icon.style.animation=""},600);
+
+  const open=quests.filter(q=>!q.completed);
+  if(!open.length)return;
+  let next=(currentDailyIndex+1)%open.length;
+  if(next===currentDailyIndex&&open.length>1)next=(next+1)%open.length;
+  currentDailyIndex=next;
+  const quest=open[next];
+
+  const title=document.getElementById("dailyQuestTitle");
+  const desc=document.getElementById("dailyQuestDesc");
+  title.style.opacity="0";desc.style.opacity="0";
+  setTimeout(()=>{
+    title.textContent=quest.title;
+    desc.textContent=quest.description;
+    title.style.transition="opacity .4s";desc.style.transition="opacity .4s";
+    title.style.opacity="1";desc.style.opacity="1";
+  },250);
+};
+
+function getBadgeDiff(d){
+  if(d==="Legendary")return"badge badge-legendary";
+  if(d==="Medium")return"badge badge-medium";
+  return"badge badge-easy";
+}
+
+function renderQuests(){
+  const grid=document.getElementById("questGrid");
+  grid.innerHTML="";
+  const filtered=currentFilter==="All"?quests:quests.filter(q=>q.category===currentFilter);
+  if(!filtered.length){
+    grid.innerHTML='<div class="empty-state">No quests here yet. Add one and make this category dramatic 🌙</div>';
+    updateStats();setDailyQuest();return;
+  }
+  filtered.forEach((quest,i)=>{
+    const orig=quests.indexOf(quest);
+    const card=document.createElement("article");
+    card.className="quest-card"+(quest.completed?" completed":"");
+    card.style.animationDelay=i*0.025+"s";
+    card.innerHTML=`
+      <div>
+        <div class="quest-top">
+          <span class="badge badge-cat">${quest.category}</span>
+          <span class="${getBadgeDiff(quest.difficulty)}">${quest.difficulty}</span>
+        </div>
+        <h3>${quest.title}</h3>
+        <p>${quest.description}</p>
+      </div>
+      <div class="quest-actions">
+        <button class="small-btn complete-btn" onclick="toggleQuest(${orig})">${quest.completed?"↩ Undo":"Complete ✓"}</button>
+        <button class="small-btn delete-btn" onclick="deleteQuest(${orig})">Delete</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateStats();setDailyQuest();
+}
+
+function updateStats(){
+  const completed=quests.filter(q=>q.completed).length;
+  const legendary=quests.filter(q=>q.difficulty==="Legendary").length;
+  const pct=quests.length?Math.round(completed/quests.length*100):0;
+  document.getElementById("totalQuests").textContent=quests.length;
+  document.getElementById("completedQuests").textContent=completed;
+  document.getElementById("progressPercent").textContent=pct+"%";
+  document.getElementById("legendaryQuests").textContent=legendary;
+  document.getElementById("xpFill").style.width=Math.max(pct,6)+"%";
+  document.getElementById("xpLabel").textContent=`${completed*25} XP earned · ${pct}% complete ✨`;
+}
+
+window.toggleQuest=function(i){quests[i].completed=!quests[i].completed;saveQuests();renderQuests()};
+window.deleteQuest=function(i){quests.splice(i,1);saveQuests();renderQuests()};
+
+document.getElementById("questForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  quests.unshift({
+    title:document.getElementById("questTitle").value,
+    category:document.getElementById("questCategory").value,
+    difficulty:document.getElementById("questDifficulty").value,
+    description:document.getElementById("questDescription").value,
+    completed:false
+  });
+  saveQuests();
+  document.getElementById("questForm").reset();
+  currentFilter="All";
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelector('[data-filter="All"]').classList.add("active");
+  renderQuests();
+});
+
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter=btn.dataset.filter;
+    renderQuests();
+  });
+});
+
+document.getElementById("saveReflectionBtn").addEventListener("click",()=>{
+  const text=document.getElementById("reflectionInput").value.trim();
+  if(!text)return;
+  reflections.unshift({text,date:new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})});
+  saveReflections();
+  document.getElementById("reflectionInput").value="";
+  renderReflections();
+});
+
+function renderReflections(){
+  const list=document.getElementById("reflectionList");
+  list.innerHTML="";
+  reflections.slice(0,5).forEach(r=>{
+    const item=document.createElement("div");
+    item.className="reflection-item";
+    item.innerHTML=`<small>${r.date}</small><p>${r.text}</p>`;
+    list.appendChild(item);
+  });
+}
+
+// Floating hearts
+const heartsBg=document.getElementById("heartsBg");
+const emojis=["🩵","💙","🫧","✦","🌙","💜","🩷","⭐"];
+for(let i=0;i<18;i++){
+  const h=document.createElement("span");
+  h.className="heart-particle";
+  h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  h.style.left=Math.random()*100+"%";
+  h.style.fontSize=(10+Math.random()*10)+"px";
+  h.style.animationDuration=(12+Math.random()*18)+"s";
+  h.style.animationDelay=Math.random()*15+"s";
+  heartsBg.appendChild(h);
+}
+
+// Cursor glow
+document.addEventListener("mousemove",e=>{
+  const g=document.getElementById("cursorGlow");
+  g.style.left=e.clientX+"px";g.style.top=e.clientY+"px";
+});
+
+renderQuests();
+renderReflections();
+</script>
+</body>
+</html>
