@@ -189,8 +189,7 @@ footer p{color:var(--muted);font-size:.85rem}
 <header id="home">
   <nav class="navbar">
     <div class="brand">
-      <span class="brand-heart">🩵</span>
-      <span>Project: Becoming Her</span>
+      <span>Becoming Her</span>
     </div>
     <div class="nav-links">
       <a href="#progress">Progress</a>
@@ -203,8 +202,8 @@ footer p{color:var(--muted);font-size:.85rem}
   <section class="hero-content">
     <div class="hero-text reveal">
       <p class="eyebrow">✦ Mharvee's life upgrade ✦</p>
-      <h1>Collect stories.<br><em>Build courage.</em><br>Become her.</h1>
-      <p class="hero-sub">A blue and lovey-dovey side quest tracker for reading, faith, skills, games, random curiosity, courage, life admin, and adventures.</p>
+      <h1>Make Beautiful Memories<br>Become her.</h1>
+      <p class="hero-sub">Onyinye take charge of your life mehn</p>
       <div class="hero-actions">
         <a href="#quests" class="btn btn-primary">✨ Explore Quests</a>
         <a href="#add" class="btn btn-secondary">🩷 Add New Quest</a>
@@ -240,22 +239,22 @@ footer p{color:var(--muted);font-size:.85rem}
 
   <section class="filters reveal">
     <button class="filter-btn active" data-filter="All">All</button>
-    <button class="filter-btn" data-filter="Reading">📚 Reading</button>
-    <button class="filter-btn" data-filter="Spiritual">🕊 Spiritual</button>
-    <button class="filter-btn" data-filter="Skills">⚡ Skills</button>
-    <button class="filter-btn" data-filter="Games">🎮 Games</button>
-    <button class="filter-btn" data-filter="Random Knowledge">🧠 Random Knowledge</button>
-    <button class="filter-btn" data-filter="Outside">🌿 Outside</button>
-    <button class="filter-btn" data-filter="Courage">🦋 Courage</button>
-    <button class="filter-btn" data-filter="Life Admin">🗂 Life Admin</button>
-    <button class="filter-btn" data-filter="Becoming Her">🩷 Becoming Her</button>
+    <button class="filter-btn" data-filter="Reading"> Reading</button>
+    <button class="filter-btn" data-filter="Spiritual"> Spiritual</button>
+    <button class="filter-btn" data-filter="Skills"></button> Skills</button>
+    <button class="filter-btn" data-filter="Games">Games</button>
+    <button class="filter-btn" data-filter="Random Knowledge"> Random Knowledge</button>
+    <button class="filter-btn" data-filter="Outside"> Outside</button>
+    <button class="filter-btn" data-filter="Courage"> Courage</button>
+    <button class="filter-btn" data-filter="Life Admin"> Life Admin</button>
+    <button class="filter-btn" data-filter="Becoming Her"> Becoming Her</button>
   </section>
 
   <section class="quest-grid" id="questGrid"></section>
 
   <section class="add-section reveal" id="add">
     <div>
-      <p class="eyebrow">✍️ Create your own</p>
+      <p class="eyebrow"> Create your own</p>
       <h2>Add a fresh side quest.</h2>
       <p style="margin-top:10px">Make it small enough to start, interesting enough to finish, and dramatic enough to feel like character development.</p>
     </div>
@@ -278,16 +277,16 @@ footer p{color:var(--muted);font-size:.85rem}
         <option value="Legendary">Legendary</option>
       </select>
       <textarea id="questDescription" placeholder="What will you do?" required></textarea>
-      <button class="btn btn-primary" type="submit">Add quest ✨</button>
+      <button class="btn btn-primary" type="submit">Add quest </button>
     </form>
   </section>
 
   <section class="reflection-section reveal" id="reflections">
     <div class="reflection-card">
-      <p class="eyebrow">📖 Reflection log</p>
+      <p class="eyebrow">Reflection log</p>
       <h2>What did today teach you?</h2>
       <textarea id="reflectionInput" placeholder="Write a short reflection, love..." style="margin:14px 0 10px"></textarea>
-      <button class="btn btn-secondary" id="saveReflectionBtn">Save reflection 🌙</button>
+      <button class="btn btn-secondary" id="saveReflectionBtn">Save reflection </button>
     </div>
     <div class="reflection-list" id="reflectionList"></div>
   </section>
@@ -372,7 +371,7 @@ function renderQuests(){
   grid.innerHTML="";
   const filtered=currentFilter==="All"?quests:quests.filter(q=>q.category===currentFilter);
   if(!filtered.length){
-    grid.innerHTML='<div class="empty-state">No quests here yet. Add one and make this category dramatic 🌙</div>';
+    grid.innerHTML='<div class="empty-state">No quests here yet. Add one and make this category dramatic </div>';
     updateStats();setDailyQuest();return;
   }
   filtered.forEach((quest,i)=>{
@@ -407,7 +406,7 @@ function updateStats(){
   document.getElementById("progressPercent").textContent=pct+"%";
   document.getElementById("legendaryQuests").textContent=legendary;
   document.getElementById("xpFill").style.width=Math.max(pct,6)+"%";
-  document.getElementById("xpLabel").textContent=`${completed*25} XP earned · ${pct}% complete ✨`;
+  document.getElementById("xpLabel").textContent=`${completed*25} XP earned · ${pct}% complete`;
 }
 
 window.toggleQuest=function(i){quests[i].completed=!quests[i].completed;saveQuests();renderQuests()};
